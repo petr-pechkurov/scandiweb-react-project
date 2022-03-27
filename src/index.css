@@ -9,3 +9,50 @@
 body {
   font-family: 'Raleway', sans-serif;
 }
+
+.products-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 90px 100px 200px 100px;
+  min-width: 386px;
+  min-height: 444px;
+}
+.product-box {
+  width: 386px;
+  height: 444px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product-box:hover {
+  box-shadow: 0px 4px 35px rgba(45, 47, 49, 0.19);
+  cursor: pointer;
+}
+.img-container {
+  width: 346px;
+  height: 333px;
+  background-color: aqua;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.img-container img {
+  width: 100%;
+}
+.product-name {
+  margin-bottom: 5px;
+}
+.name-and-price {
+  font-size: 18px;
+  margin: 24px 0 0 0;
+}
+.price {
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .products-container {
+    flex-direction: column;
+  }
+}
