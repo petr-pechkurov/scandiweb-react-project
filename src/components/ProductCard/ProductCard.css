@@ -1,0 +1,33 @@
+.product-box {
+  width: 386px;
+  height: 444px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 100px 20px 0 0;
+}
+.product-box:hover {
+  box-shadow: 0px 4px 35px rgba(45, 47, 49, 0.19);
+  cursor: pointer;
+}
+.img-container {
+  width: 346px;
+  height: 333px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.img-container img {
+  width: 100%;
+}
+.product-name {
+  margin-bottom: 5px;
+}
+.name-and-price {
+  font-size: 18px;
+  margin: 24px 0 0 0;
+}
+.product-price {
+  font-weight: 600;
+}
