@@ -1,8 +1,8 @@
 .buttons-container {
   display: flex;
   height: 80px;
-  margin-left: 100px;
-  margin-bottom: 50px;
+  margin-left: 6rem;
+  margin-bottom: 3rem
 }
 
 .button {
@@ -13,8 +13,10 @@
   text-transform: uppercase;
 }
 
-.button:hover {
-  background-color: black;
-  color: white;
+.button:hover, .selected {
+  /* background-color: #5ECE7B; */
+  color: var(--c-primary);
   cursor: pointer;
+  border-bottom: 2px solid var(--c-primary);
+  font-weight: bold;
 }

@@ -37,4 +37,9 @@ async function getCategories() {
   return await client.post(query);
 }
 
-export { getProductById, getCategoriesWithProducts, getCategories };
+async function getCurrencies() {
+  var query = new Query('currencies').addFieldList(['symbol', 'label']);
+  return await client.post(query);
+}
+
+export { getProductById, getCategoriesWithProducts, getCategories, getCurrencies };

@@ -3,13 +3,27 @@ import './CategorySelector.css';
 import { getCategories } from '../../repository';
 
 export default class CategorySelecor extends Component {
-  constructor() {
-    super();
-    getCategories().then((result) => this.setState(result));
+  categories;
+
+  async componentDidMount() {
+    ({ categories: this.categories } = await getCategories());
+    this.categories = this.categories.map((cat) => {
+      return { ...cat, selected: false };
+    });
+    const [firstCategory] = this.categories;
+    firstCategory.selected = true;
+    this.setState({ categories: this.categories });
   }
 
   selectCategory = (event) => {
-    this.props.onSelect(event.target.name);
+    const selectedCategoryName = event.target.name;
+
+    this.categories.forEach((category) => {
+      category.selected = category.name === selectedCategoryName ? true : false;
+    });
+
+    this.setState({ categories: this.categories });
+    this.props.onSelect(selectedCategoryName);
   };
 
   render() {
@@ -20,7 +34,7 @@ export default class CategorySelecor extends Component {
             onClick={this.selectCategory}
             key={category.name}
             name={category.name}
-            className='button'>
+            className={`button ${category.selected ? 'selected' : ''}`}>
             {category.name}
           </button>
         ))}

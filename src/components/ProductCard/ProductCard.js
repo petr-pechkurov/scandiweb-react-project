@@ -5,8 +5,8 @@ export default class ProductCard extends React.Component {
   render() {
     const { id, name, gallery, prices } = this.props.product;
     const [imgSrc] = gallery;
-    var [price] = prices;
-    var { symbol } = price.currency;
+    const [price] = prices;
+    const { symbol } = price.currency;
 
     return (
       <div className='product-box'>

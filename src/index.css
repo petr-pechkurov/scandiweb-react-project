@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
 
+:root {
+  --c-primary: #5ece7b;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -23,16 +27,27 @@ body {
 .products-container {
   display: flex;
   margin: 0px 100px 200px 100px;
-  min-width: 386px;
-  min-height: 444px;
   flex-wrap: wrap;
 }
 
 .category-name {
   font-size: 42px;
   display: inline;
-  flex:0 0 100%;
+  flex: 0 0 100%;
   text-transform: capitalize;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header .box {
+  display: flex;
+}
+
+.header .box .cart {
+  margin-right: 9rem;
 }
 
 @media (max-width: 768px) {
