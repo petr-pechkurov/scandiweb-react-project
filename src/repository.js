@@ -8,10 +8,18 @@ async function getProductById(id) {
     .addField('id')
     .addField('name')
     .addField('gallery')
+    .addField('description')
+    .addField('brand')
+    .addField(
+      new Field('attributes')
+        .addField('id')
+        .addField('name')
+        .addField('type')
+        .addField(new Field('items').addField('id').addField('value').addField('displayValue')))
     .addField(
       new Field('prices')
-        .addField(new Field('currency').addField('label').addField('symbol'))
         .addField('amount')
+        .addField(new Field('currency').addField('label').addField('symbol'))
     );
 
   return await client.post(query);
@@ -41,5 +49,6 @@ async function getCurrencies() {
   var query = new Query('currencies').addFieldList(['symbol', 'label']);
   return await client.post(query);
 }
+
 
 export { getProductById, getCategoriesWithProducts, getCategories, getCurrencies };

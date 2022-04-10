@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './CategorySelector.css';
 import { getCategories } from '../../repository';
+import { withRouter } from '../../withRouter';
 
-export default class CategorySelecor extends Component {
+class CategorySelecor extends Component {
   categories;
 
   async componentDidMount() {
@@ -24,6 +25,7 @@ export default class CategorySelecor extends Component {
 
     this.setState({ categories: this.categories });
     this.props.onSelect(selectedCategoryName);
+    this.props.navigate(`/${selectedCategoryName}`);
   };
 
   render() {
@@ -42,3 +44,5 @@ export default class CategorySelecor extends Component {
     );
   }
 }
+
+export default withRouter(CategorySelecor);

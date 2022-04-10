@@ -9,7 +9,8 @@ class App extends React.Component {
       <>
         <Routes>
           <Route path='/' element={<CategoryPage />} />
-          <Route path='/description' element={<ProductDescriptionPage />} />
+          <Route path='/:name' element={<CategoryPage />} />
+          <Route path='/product/:id' element={<ProductDescriptionPage />} />
         </Routes>
       </>
     );

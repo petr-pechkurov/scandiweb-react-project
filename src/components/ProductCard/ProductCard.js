@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import './ProductCard.css';
 
 export default class ProductCard extends React.Component {
@@ -9,7 +10,8 @@ export default class ProductCard extends React.Component {
     const { symbol } = price.currency;
 
     return (
-      <div className='product-box'>
+      <div className='product-box' onClick={() => this.setState({redirect: true})}>
+        {this.state?.redirect && <Navigate to={`/product/${id}`} replace={true} />}
         <div className='product-card'>
           <div className='img-container'>
             <img alt={name} src={imgSrc} />

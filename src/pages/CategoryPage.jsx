@@ -5,9 +5,28 @@ import { getCategoriesWithProducts } from '../repository';
 import { ClassicSpinner } from 'react-spinners-kit';
 import CurrencySwitcher from '../components/CurrencySwitcher/CurrencySwitcher';
 import CartOverlay from '../components/CartOverlay/CartOverlay';
+import { useParams } from 'react-router-dom';
 
-export default class CategoryPage extends Component {
+function withRouter(Component) {
+  function ComponentWithRouter(props) {
+    let params = useParams();
+    return <Component {...props} params={params} />;
+  }
+  return ComponentWithRouter;
+}
+
+class CategoryPage extends Component {
   categories = [];
+
+  state = {
+    name: '',
+  };
+
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      name: nextProps.params.name,
+    };
+  }
 
   async componentDidMount() {
     ({ categories: this.categories } = await getCategoriesWithProducts());
@@ -16,9 +35,21 @@ export default class CategoryPage extends Component {
       return { ...category, selected: false };
     });
 
-    const [firstCategory] = this.categories;
-    firstCategory.selected = true;
-    this.setState(firstCategory);
+    const categoriesNames = this.categories.map((category) => category.name);
+    console.log('names', categoriesNames);
+
+    const categoryName = this.props.params.name ?? this.categories[0].name;
+
+    if (!categoriesNames.includes(categoryName)) {
+      this.setState({ invalidCategory: true });
+      return;
+    }
+
+    const selectedCategory = this.categories.find(
+      (category) => category.name === categoryName
+    );
+    selectedCategory.selected = true;
+    this.setState(selectedCategory);
   }
 
   setProductPrices = (currency) => {
@@ -38,7 +69,7 @@ export default class CategoryPage extends Component {
   };
 
   render() {
-    if (this.state) {
+    if (this.state.products) {
       console.log('this.state:', this.state);
       return (
         <div>
@@ -64,6 +95,10 @@ export default class CategoryPage extends Component {
       );
     }
 
+    if (this.state.invalidCategory) {
+      return <div>Invalid Category!</div>
+    }
+
     return (
       <div className='center'>
         <ClassicSpinner color='black' />
@@ -72,3 +107,6 @@ export default class CategoryPage extends Component {
     );
   }
 }
+
+const HOCCategoryPage = withRouter(CategoryPage);
+export default HOCCategoryPage;
