@@ -1,102 +1,50 @@
 import React, { Component } from 'react';
 import Category from '../components/Category/Category';
-import CategorySelecor from '../components/CategorySelector/CategorySelector';
-import { getCategoriesWithProducts } from '../repository';
+import Header from '../components/Header';
 import { ClassicSpinner } from 'react-spinners-kit';
-import CurrencySwitcher from '../components/CurrencySwitcher/CurrencySwitcher';
-import CartOverlay from '../components/CartOverlay/CartOverlay';
-import { useParams } from 'react-router-dom';
-
-function withRouter(Component) {
-  function ComponentWithRouter(props) {
-    let params = useParams();
-    return <Component {...props} params={params} />;
-  }
-  return ComponentWithRouter;
-}
+import { getCategoriesWithProducts } from '../repository';
+import { withRouter } from '../withRouter';
 
 class CategoryPage extends Component {
-  categories = [];
-
-  state = {
-    name: '',
-  };
-
-  static getDerivedStateFromProps(nextProps) {
-    return {
-      name: nextProps.params.name,
-    };
-  }
-
+  categories;
   async componentDidMount() {
     ({ categories: this.categories } = await getCategoriesWithProducts());
-
-    this.categories = this.categories.map((category) => {
-      return { ...category, selected: false };
-    });
-
-    const categoriesNames = this.categories.map((category) => category.name);
-    console.log('names', categoriesNames);
-
-    const categoryName = this.props.params.name ?? this.categories[0].name;
-
-    if (!categoriesNames.includes(categoryName)) {
-      this.setState({ invalidCategory: true });
-      return;
-    }
-
-    const selectedCategory = this.categories.find(
-      (category) => category.name === categoryName
-    );
-    selectedCategory.selected = true;
-    this.setState(selectedCategory);
+    const selectedCategory = this.props.params.name;
+    this.setSelectedCategory(selectedCategory);
   }
 
-  setProductPrices = (currency) => {
-    const selectedCategory = this.categories.find(
-      (category) => (category.name = this.state.name)
-    );
-    const products = selectedCategory.products.map((product) => {
+  setSelectedCategory(categoryName) {
+    this.categories = this.categories.map((category) => {
       return {
-        ...product,
-        prices: product.prices.filter(
-          (price) => price.currency.symbol === currency
-        ),
+        ...category,
+        selected: category.name === categoryName ? true : false,
       };
     });
+    this.setState({ categories: this.categories });
+  }
 
-    this.setState({ products });
-  };
+  componentDidUpdate(prevProps) {
+    if (this.props.params.name !== prevProps.params.name) {
+      this.setSelectedCategory(this.props.params.name);
+    }
+  }
 
   render() {
-    if (this.state.products) {
-      console.log('this.state:', this.state);
+    if (this.state?.categories) {
+      const { categories } = this.state;
       return (
-        <div>
-          <div className='header'>
-            <div className='box'>
-              <CategorySelecor
-                onSelect={(name) => {
-                  this.setState(this.categories.find((c) => c.name === name));
-                }}
-              />
-            </div>
-            <div className='box'>
-              <CurrencySwitcher onSwitch={this.setProductPrices} />
-              <div className='cart'>
-                <CartOverlay />
-              </div>
-            </div>
-          </div>
+        <>
+          <Header categories={categories} />
           <div className='products-container'>
-            <Category name={this.state.name} products={this.state} />
+            <Category
+              products={
+                categories.find((category) => category.selected === true)
+                  ?.products
+              }
+            />
           </div>
-        </div>
+        </>
       );
-    }
-
-    if (this.state.invalidCategory) {
-      return <div>Invalid Category!</div>
     }
 
     return (
@@ -108,5 +56,5 @@ class CategoryPage extends Component {
   }
 }
 
-const HOCCategoryPage = withRouter(CategoryPage);
-export default HOCCategoryPage;
+const HOCProductPage = withRouter(CategoryPage);
+export default HOCProductPage;

@@ -73,20 +73,22 @@ body {
   align-items: center;
   flex-direction: column;
   justify-content: space-around;
-  box-shadow: 0px 0px 2px rgba(45, 47, 49, 0.19);
 }
 .pdp-gallery-img-container img {
-  margin: 1rem 0;
+  margin-bottom: 1rem;
   max-width: 5.5rem;
+}
+.pdp-gallery-img-container img:hover {
+  box-shadow: 0px 0px 30px rgba(45, 47, 49, 0.19);
+  cursor: pointer;
 }
 
 .big-image img {
   max-width: 611px;
-  box-shadow: 0px 0px 2px rgba(45, 47, 49, 0.19);
 }
 
 .description {
-  box-shadow: 0px 0px 2px rgba(45, 47, 49, 0.19);
+  min-width: 18.25rem;
 }
 
 .description .brand {

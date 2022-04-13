@@ -13,6 +13,7 @@ function withRouter(Component) {
 class ProductDescriptionPage extends Component {
   state = {
     id: '',
+    image: '',
   };
 
   static getDerivedStateFromProps(nextProps) {
@@ -25,8 +26,18 @@ class ProductDescriptionPage extends Component {
     this.setState({ id: this.props.params.id });
 
     const { product } = await getProductById(this.state.id);
-    this.setState({product: product});
+    this.setState({ product: product, image: product.gallery[0] });
   }
+
+  setImage = (event) => {
+    const img = this.state.product.gallery.find(
+      (img) => img === event.target.src
+    );
+
+    this.setState({
+      image: img,
+    });
+  };
 
   render() {
     if (this.state.product) {
@@ -34,8 +45,8 @@ class ProductDescriptionPage extends Component {
       return (
         <>
           <div className='pdp-container'>
-            <Gallery gallery={gallery} />
-            <ProductImage image={gallery[0]} />
+            <Gallery setImage={this.setImage} gallery={gallery} />
+            <ProductImage image={this.state.image} />
             <Description product={this.state.product} />
           </div>
         </>
@@ -54,7 +65,12 @@ class Gallery extends Component {
     return (
       <div className='pdp-gallery-img-container'>
         {gallery.map((img, index) => (
-          <img src={img} key={index} alt='product' />
+          <img
+            onClick={(event) => this.props.setImage(event)}
+            src={img}
+            key={index}
+            alt='product'
+          />
         ))}
       </div>
     );
