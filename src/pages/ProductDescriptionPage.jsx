@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getProductById } from '../repository';
 import { useParams } from 'react-router-dom';
+import Header from '../components/Header';
 
 function withRouter(Component) {
   function ComponentWithRouter(props) {
@@ -44,6 +45,7 @@ class ProductDescriptionPage extends Component {
       const { gallery } = this.state.product;
       return (
         <>
+          <Header />
           <div className='pdp-container'>
             <Gallery setImage={this.setImage} gallery={gallery} />
             <ProductImage image={this.state.image} />

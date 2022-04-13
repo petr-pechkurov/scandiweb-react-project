@@ -2,19 +2,28 @@ import React, { Component } from 'react';
 import './CurrencySwitcher.css';
 import { getCurrencies } from '../../repository';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import CurrencyContext from '../../contexts/CurrencyContext';
 
 export default class CurrencySwitcher extends Component {
   state = {
     loaded: false,
-    selectedCurrency: {},
   };
+
+  static contextType = CurrencyContext;
 
   currencies;
   async componentDidMount() {
     const data = await getCurrencies();
     this.currencies = data.currencies;
-    const [firstCurrency] = this.currencies;
-    this.setState({ loaded: true, selectedCurrency: firstCurrency });
+    const selectedCurrency = this.currencies.find(currency => currency.symbol === this.context.currency);
+    this.setState({ loaded: true, selectedCurrency: selectedCurrency });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedCurrency?.symbol !== this.context.currency) {
+      const selectedCurrency = this.currencies.find(currency => currency.symbol === this.context.currency);
+      this.setState({ loaded: true, selectedCurrency: selectedCurrency });
+    }
   }
 
   setSelectedCurrency(selected) {
@@ -22,13 +31,13 @@ export default class CurrencySwitcher extends Component {
       (currency) => currency.symbol === selected
     );
     this.setState({ selectedCurrency: selectedCurrency });
-    this.props.onSwitch(selected);
+    this.context.setCurrency(selectedCurrency.symbol);
   }
 
   render() {
     return (
       <CurrencyDropdown
-        selected={this.state.selectedCurrency.symbol}
+        selected={this.state.selectedCurrency?.symbol}
         options={this.currencies}
         onSelect={(selected) => this.setSelectedCurrency(selected)}
       />

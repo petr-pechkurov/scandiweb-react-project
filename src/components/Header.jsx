@@ -2,21 +2,41 @@ import React, { Component } from 'react';
 import CategorySelecor from '../components/CategorySelector/CategorySelector';
 import CurrencySwitcher from '../components/CurrencySwitcher/CurrencySwitcher';
 import CartOverlay from '../components/CartOverlay/CartOverlay';
+import { getCategories } from '../repository';
+import { withRouter } from '../withRouter';
 
-export default class Header extends Component {
+class Header extends Component {
+  categories;
+  async componentDidMount() {
+    ({ categories: this.categories } = await getCategories());
+    const selectedCategory = this.props.params.name;
+    this.setSelectedCategory(selectedCategory);
+  }
+
+  setSelectedCategory(categoryName) {
+    this.categories = this.categories.map((category) => {
+      return {
+        ...category,
+        selected: category.name === categoryName ? true : false,
+      };
+    });
+    this.setState({ categories: this.categories });
+  }
+
   render() {
+    if (!this.state) return null;
     return (
       <div>
         <div className='header'>
           <div className='box'>
             <CategorySelecor
-              categories={this.props.categories.map((category) => {
+              categories={this.categories.map((category) => {
                 return { name: category.name, selected: category.selected };
               })}
             />
           </div>
           <div className='box'>
-            <CurrencySwitcher onSwitch={this.setProductPrices} />
+            <CurrencySwitcher />
             <div className='cart'>
               <CartOverlay />
             </div>
@@ -26,6 +46,9 @@ export default class Header extends Component {
     );
   }
 }
+
+const HOCHeader = withRouter(Header);
+export default HOCHeader;
 
 // setProductPrices = (currency) => {
 //   const selectedCategory = this.categories.find(

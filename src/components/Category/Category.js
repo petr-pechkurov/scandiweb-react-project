@@ -1,4 +1,5 @@
 import React from 'react';
+import CurrencyContext from '../../contexts/CurrencyContext';
 import ProductCard from '../ProductCard/ProductCard';
 
 export default class Category extends React.Component {
@@ -6,11 +7,13 @@ export default class Category extends React.Component {
     if (!this.props.products) {
       return <div>no products</div>
     }
-    return (<>
-      <div className='category-name'>{this.props.name}</div>
-      {this.props.products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </>)
+
+    return (
+      <>
+        <div className='category-name'>{this.props.name}</div>
+        {this.props.products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </>)
   }
 }
