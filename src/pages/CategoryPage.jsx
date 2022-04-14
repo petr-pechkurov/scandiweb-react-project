@@ -4,15 +4,13 @@ import Header from '../components/Header';
 import { ClassicSpinner } from 'react-spinners-kit';
 import { getCategoriesWithProducts } from '../repository';
 import { withRouter } from '../withRouter';
-import CurrencyContext from '../contexts/CurrencyContext';
 
 class CategoryPage extends Component {
   categories;
   async componentDidMount() {
     ({ categories: this.categories } = await getCategoriesWithProducts());
-    const selectedCategory = this.props.params.name;
+    const selectedCategory = this.props.params.name ?? 'all';
     this.setSelectedCategory(selectedCategory);
-    this.setCurrency('$');
   }
 
   setSelectedCategory(categoryName) {
@@ -31,30 +29,19 @@ class CategoryPage extends Component {
     }
   }
 
-  setCurrency = (currency) => {
-    this.setState({ currency: currency });
-  };
-
   render() {
-    if (this.state?.categories && this.state.currency) {
+    if (this.state?.categories) {
       const { categories } = this.state;
       return (
         <>
-          <CurrencyContext.Provider
-            value={{
-              currency: this.state?.currency,
-              setCurrency: this.setCurrency,
-            }}>
-            <Header />
-            <div className='products-container'>
-              <Category
-                products={
-                  categories.find((category) => category.selected === true)
-                    ?.products
-                }
-              />
-            </div>
-          </CurrencyContext.Provider>
+          <Header />
+          <div className='products-container'>
+            <Category
+              category={categories.find(
+                (category) => category.selected === true
+              )}
+            />
+          </div>
         </>
       );
     }

@@ -134,6 +134,18 @@ body {
 .add-button:hover {
   box-shadow: 0px 0px 1rem rgba(45, 47, 49, 0.19);
 }
+.add-button-added {
+  width: 100%;
+  background-color: gray;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1rem;
+  line-height: 20px;
+  padding: 1rem 2rem;
+  margin: 20px 0;
+  border: none;
+}
+
 .attribute-values-container {
   display: flex;
   align-items: center;
@@ -149,4 +161,22 @@ body {
   font-size: 1rem;
   min-width: 4rem;
   min-height: 2.8rem;
+}
+.cart-overlay {
+  margin-left: 10px;
+  position: relative;
+}
+
+.cart-overlay .product-counter {
+  position: absolute;
+  cursor: default;
+  bottom: 55%;
+  left: 50%;
+  background-color: #1d1f22;
+  color: white;
+  width: 100%;
+  border-radius: 50%;
+  font-weight: 700;
+  text-align: center;
+  font-family: Roboto;
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getProductById } from '../repository';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
+import CurrencyContext from '../contexts/CurrencyContext';
 
 function withRouter(Component) {
   function ComponentWithRouter(props) {
@@ -90,32 +91,46 @@ class ProductImage extends Component {
 }
 
 class Description extends Component {
+  static contextType = CurrencyContext;
+
+  state = {
+    product: { id: this.props.product.id, attributes: [] },
+  };
+
+  addAttribute = (attributes) => {
+    this.setState({
+      product: { id: this.props.product.id,  attributes: attributes },
+    });
+  };
+
+  handleClick = () => {
+    this.context.addProduct(this.state.product);
+    this.setState({ added: true });
+    setTimeout(() => {
+      this.setState({ added: false });
+    }, 2000);
+  };
+
   render() {
     const { brand, name, description, prices, attributes } = this.props.product;
-    console.log(prices);
+    console.log(this.props.product);
     return (
       <div className='description'>
         <div className='brand'>{brand}</div>
         <div className='name'>{name}</div>
         <Attributes attributes={attributes} />
-        <Price price={prices[0]} />
-        <button className='add-button'>Add to Cart</button>
+        <Price
+          price={prices.find(
+            (price) => price.currency.symbol === this.context.currency
+          )}
+        />
+        <button
+          className={this.state?.added ? 'add-button-added' : 'add-button'}
+          onClick={this.handleClick}>
+          {this.state?.added ? 'Added to the cart!' : 'Add to Cart'}
+        </button>
         <div className='product-description'>
           <div dangerouslySetInnerHTML={{ __html: description }}></div>
-        </div>
-      </div>
-    );
-  }
-}
-
-class Price extends Component {
-  render() {
-    console.log(this.props);
-    return (
-      <div className='price'>
-        <div className='attribute-label'>PRICE:</div>
-        <div className='amount'>
-          {this.props.price.currency.symbol} {this.props.price.amount}
         </div>
       </div>
     );
@@ -125,17 +140,38 @@ class Price extends Component {
 class Attributes extends Component {
   render() {
     const { attributes } = this.props;
-    console.log('attributes:', this.props);
     return (
       <div className=''>
         {attributes.map((attribute) => {
           return (
-            <Attribute
-              key={attribute.id}
-              name={attribute.name}
-              type={attribute.type}
-              items={attribute.items}
-            />
+            <div key={attribute.id} className='attribute-label'>
+              {attribute.name}:
+              <div className='attribute-values-container'>
+                {attribute.items.map((item) => {
+                  if (attribute.type === 'swatch') {
+                    return (
+                      <button
+                        className='selector'
+                        key={item.id}
+                        onClick={() =>
+                          console.log({ ...attribute, items: [item] })
+                        }
+                        style={{ backgroundColor: item.value }}></button>
+                    );
+                  }
+                  return (
+                    <button
+                      className='selector'
+                      key={item.id}
+                      onClick={() =>
+                        console.log({ ...attribute, items: [item] })
+                      }>
+                      {item.displayValue}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           );
         })}
       </div>
@@ -143,38 +179,15 @@ class Attributes extends Component {
   }
 }
 
-class Attribute extends Component {
+class Price extends Component {
   render() {
+    // console.log(this.props);
     return (
-      <div className='attribute-label'>
-        {this.props.name}:
-        {<AttributeType items={this.props.items} type={this.props.type} />}
-      </div>
-    );
-  }
-}
-
-class AttributeType extends Component {
-  render() {
-    console.log('types:', this.props);
-    const { items, type } = this.props;
-    return (
-      <div className='attribute-values-container'>
-        {items.map((item) => {
-          if (type === 'swatch') {
-            return (
-              <button
-                className='selector'
-                key={item.id}
-                style={{ backgroundColor: item.value }}></button>
-            );
-          }
-          return (
-            <button className='selector' key={item.id}>
-              {item.displayValue}
-            </button>
-          );
-        })}
+      <div className='price'>
+        <div className='attribute-label'>PRICE:</div>
+        <div className='amount'>
+          {this.props.price.currency.symbol} {this.props.price.amount}
+        </div>
       </div>
     );
   }

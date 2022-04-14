@@ -49,19 +49,3 @@ class Header extends Component {
 
 const HOCHeader = withRouter(Header);
 export default HOCHeader;
-
-// setProductPrices = (currency) => {
-//   const selectedCategory = this.categories.find(
-//     (category) => (category.name = this.state.name)
-//   );
-//   const products = selectedCategory.products.map((product) => {
-//     return {
-//       ...product,
-//       prices: product.prices.filter(
-//         (price) => price.currency.symbol === currency
-//       ),
-//     };
-//   });
-
-//   this.setState({ products });
-// };
