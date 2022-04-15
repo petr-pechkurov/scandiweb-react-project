@@ -94,13 +94,18 @@ class Description extends Component {
   static contextType = CurrencyContext;
 
   state = {
-    product: { id: this.props.product.id, attributes: [] },
+    product: this.props.product,
   };
 
-  addAttribute = (attributes) => {
-    this.setState({
-      product: { id: this.props.product.id,  attributes: attributes },
-    });
+  setSelectedAttribute = ({ attributeId, selectedItemId }) => {
+    const product = JSON.parse(JSON.stringify(this.state.product));
+    const selectedAttribute = product.attributes.find(
+      (attribute) => attribute.id === attributeId
+    );
+    selectedAttribute.items.forEach(
+      (item) => (item.selected = item.id === selectedItemId ? true : false)
+    );
+    this.setState({ product });
   };
 
   handleClick = () => {
@@ -112,13 +117,15 @@ class Description extends Component {
   };
 
   render() {
-    const { brand, name, description, prices, attributes } = this.props.product;
-    console.log(this.props.product);
+    const { brand, name, description, prices, attributes } = this.state.product;
     return (
       <div className='description'>
         <div className='brand'>{brand}</div>
         <div className='name'>{name}</div>
-        <Attributes attributes={attributes} />
+        <Attributes
+          attributes={attributes}
+          onSelect={this.setSelectedAttribute}
+        />
         <Price
           price={prices.find(
             (price) => price.currency.symbol === this.context.currency
@@ -151,20 +158,28 @@ class Attributes extends Component {
                   if (attribute.type === 'swatch') {
                     return (
                       <button
-                        className='selector'
+                        className={`selector ${
+                          item.selected ? 'color' : ''
+                        }`}
                         key={item.id}
                         onClick={() =>
-                          console.log({ ...attribute, items: [item] })
+                          this.props.onSelect({
+                            attributeId: attribute.id,
+                            selectedItemId: item.id,
+                          })
                         }
                         style={{ backgroundColor: item.value }}></button>
                     );
                   }
                   return (
                     <button
-                      className='selector'
+                      className={`selector ${item.selected ? 'selected' : ''}`}
                       key={item.id}
                       onClick={() =>
-                        console.log({ ...attribute, items: [item] })
+                        this.props.onSelect({
+                          attributeId: attribute.id,
+                          selectedItemId: item.id,
+                        })
                       }>
                       {item.displayValue}
                     </button>
@@ -181,7 +196,6 @@ class Attributes extends Component {
 
 class Price extends Component {
   render() {
-    // console.log(this.props);
     return (
       <div className='price'>
         <div className='attribute-label'>PRICE:</div>

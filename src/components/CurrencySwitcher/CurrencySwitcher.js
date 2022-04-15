@@ -66,18 +66,23 @@ class CurrencyDropdown extends Component {
           </div>
           <input type='hidden' name='currency' />
           {this.state.open && (
-            <ul className='dropdown-menu'>
-              {this.props.options.map((option) => (
-                <li
-                  key={option.symbol}
-                  onClick={() => {
-                    this.props.onSelect(option.symbol);
-                    this.setState({ open: false });
-                  }}>
-                  {option.symbol} {option.label}
-                </li>
-              ))}
-            </ul>
+            <>
+              <div
+                className='background'
+                onClick={() => this.setState({ open: false })}></div>
+              <ul className='dropdown-menu'>
+                {this.props.options.map((option) => (
+                  <li
+                    key={option.symbol}
+                    onClick={() => {
+                      this.props.onSelect(option.symbol);
+                      this.setState({ open: false });
+                    }}>
+                    {option.symbol} {option.label}
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
         </div>
       </div>

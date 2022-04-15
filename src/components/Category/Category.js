@@ -3,7 +3,6 @@ import ProductCard from '../ProductCard/ProductCard';
 
 export default class Category extends React.Component {
   render() {
-    console.log(this.props);
     const { products, name } = this.props.category;
     if (!products) {
       return <div>no products</div>

@@ -118,6 +118,7 @@ body {
   font-weight: 700;
   font-size: 18px;
   text-transform: uppercase;
+  font-family: Roboto;
 }
 .add-button {
   width: 100%;
@@ -162,21 +163,123 @@ body {
   min-width: 4rem;
   min-height: 2.8rem;
 }
+.attribute-values-container .selector:hover {
+  transform: scale(1.15);
+}
+.attribute-values-container .selected {
+  color: white;
+  background-color: #1d1f22;
+}
+.attribute-values-container .color {
+  transform: scale(1.15);
+  border: 2px solid #1d1f22;
+}
+
 .cart-overlay {
   margin-left: 10px;
+  padding: 0 10px;
   position: relative;
+  z-index: 10;
+}
+
+.cart-overlay .background {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  left: 0%;
+  top: 80px;
+}
+
+.cart-overlay .cart-icon {
+  padding: 2px;
+  cursor: pointer;
 }
 
 .cart-overlay .product-counter {
+  cursor: pointer;
   position: absolute;
-  cursor: default;
   bottom: 55%;
   left: 50%;
   background-color: #1d1f22;
   color: white;
-  width: 100%;
-  border-radius: 50%;
+  width: 45%;
+  border-radius: 60px;
   font-weight: 700;
   text-align: center;
   font-family: Roboto;
+}
+
+.cart-overlay .overlay-container {
+  position: absolute;
+  top: 52px;
+  right: 10%;
+  background-color: white;
+  padding: 0.5rem 1rem 20px 1rem;
+  max-height: 33.75rem;
+  width: 20rem;
+  overflow-y: auto;
+}
+.cart-item-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 0;
+}
+.cart-item-container .info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cart-item-label {
+}
+.cart-item-price {
+  margin-top: 5px;
+  font-weight: 700;
+}
+
+.cart-item-container .add-remove-buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+
+.cart-item-container .gallery {
+  display: flex;
+}
+
+.cart-item-container .img-container {
+  width: 105px;
+  max-height: 137px;
+}
+.cart-item-container .img-container img {
+  margin: auto;
+}
+.cart-item-button {
+  padding: 2px;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.cart-item-swatch {
+  padding: 2px;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.total-container {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.button-block {
+  display: flex;
+  justify-content: space-between;
 }
