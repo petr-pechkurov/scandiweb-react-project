@@ -419,3 +419,15 @@ hr {
   justify-content: center;
   align-items: center;
 }
+
+.img-preview {
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.img-preview img {
+  width: 100%;
+  min-height: 100px;
+  object-fit: contain;
+}

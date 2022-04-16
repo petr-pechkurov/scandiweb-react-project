@@ -33,6 +33,12 @@ async function getCategoriesWithProducts() {
         .addField('id')
         .addField('name')
         .addField('gallery')
+        .addField(
+          new Field('attributes')
+            .addField('id')
+            .addField('name')
+            .addField('type')
+            .addField(new Field('items').addField('id').addField('value').addField('displayValue')))
         .addField(new Field('prices')
           .addField(new Field('currency').addField('label').addField('symbol'))
           .addField('amount'))

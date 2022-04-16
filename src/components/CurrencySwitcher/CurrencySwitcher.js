@@ -15,13 +15,17 @@ export default class CurrencySwitcher extends Component {
   async componentDidMount() {
     const data = await getCurrencies();
     this.currencies = data.currencies;
-    const selectedCurrency = this.currencies.find(currency => currency.symbol === this.context.currency);
+    const selectedCurrency = this.currencies.find(
+      (currency) => currency.symbol === this.context.currency
+    );
     this.setState({ loaded: true, selectedCurrency: selectedCurrency });
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.selectedCurrency?.symbol !== this.context.currency) {
-      const selectedCurrency = this.currencies.find(currency => currency.symbol === this.context.currency);
+      const selectedCurrency = this.currencies.find(
+        (currency) => currency.symbol === this.context.currency
+      );
       this.setState({ loaded: true, selectedCurrency: selectedCurrency });
     }
   }
@@ -30,8 +34,9 @@ export default class CurrencySwitcher extends Component {
     const selectedCurrency = this.currencies.find(
       (currency) => currency.symbol === selected
     );
-    this.setState({ selectedCurrency: selectedCurrency });
+    this.setState({ selectedCurrency });
     this.context.setCurrency(selectedCurrency.symbol);
+    sessionStorage.setItem('currency', selectedCurrency.symbol);
   }
 
   render() {

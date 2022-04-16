@@ -88,21 +88,23 @@ class QuantityButtons extends Component {
   }
 
   changeQuantity(quantity) {
-    if (this.state.count === 0 && quantity === -1) return;
+    if (this.state.count === 1 && quantity === -1) return;
     const count = this.state.count + quantity;
     this.setState({ count: count });
     this.context.changeQuantity(this.props.item.number, count);
   }
 
   render() {
-    if (!this.state?.count) return null;
+    if (!this.state) return null;
     return (
       <div className='add-remove-buttons-container'>
         <button className='btn' onClick={() => this.changeQuantity(1)}>
           +
         </button>
         <div>{this.state.count ?? 1}</div>
-        <button className='btn'>-</button>
+        <button className='btn' onClick={() => this.changeQuantity(-1)}>
+          -
+        </button>
       </div>
     );
   }

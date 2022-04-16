@@ -109,17 +109,7 @@ class Description extends Component {
   };
 
   handleClick = () => {
-    const product = JSON.parse(JSON.stringify(this.state.product));
-    const { attributes } = product;
-    attributes.forEach((attribute) => {
-      const selectedItems = attribute.items.find((item) => item.selected);
-      if (!selectedItems) {
-        attribute.items[0].selected = true;
-      }
-    });
-    product.number = this.context.cart.length;
-    product.quantity = 1;
-    this.context.addProduct(product);
+    this.context.addProduct(this.state.product);
     this.setState({ added: true });
     setTimeout(() => {
       this.setState({ added: false });

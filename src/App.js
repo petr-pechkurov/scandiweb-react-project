@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import CategoryPage from './pages/CategoryPage';
 import ProductDescriptionPage from './pages/ProductDescriptionPage';
 import CurrencyContext from './contexts/CurrencyContext';
@@ -10,9 +10,20 @@ class App extends React.Component {
     this.setState({ currency: currency });
   };
 
-  addProduct = (product) => {
+  addProduct = (newProduct) => {
+    const product = JSON.parse(JSON.stringify(newProduct));
+    const { attributes } = product;
+    attributes.forEach((attribute) => {
+      const selectedItems = attribute.items.find((item) => item.selected);
+      if (!selectedItems) {
+        attribute.items[0].selected = true;
+      }
+    });
+    product.number = this.state.cart.length;
+    product.quantity = 1;
     const cart = [...this.state.cart, product];
-    this.setState({ cart: cart });
+    this.setState({ cart });
+    sessionStorage.setItem('cart', JSON.stringify(cart));
   };
 
   removeProduct = (index) => {
@@ -23,27 +34,29 @@ class App extends React.Component {
   };
 
   changeQuantity = (index, quantity) => {
-    console.log(index, quantity);
+    console.log('test', index, quantity);
     const cart = this.state.cart.map((item) => {
       if (item.number === index) {
-        return { ...item, quantity: quantity }
+        return { ...item, quantity: quantity };
       }
       return item;
-    })
-    this.setState({ cart: cart });
-  }
+    });
+    this.setState({ cart });
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+  };
 
   state = {
-    currency: '$',
+    currency: sessionStorage.getItem('currency') || '$',
     setCurrency: this.setCurrency,
 
-    cart: [],
+    cart: JSON.parse(sessionStorage.getItem('cart')) || [],
     addProduct: this.addProduct,
     removeProduct: this.removeProduct,
-    changeQuantity: this.changeQuantity
+    changeQuantity: this.changeQuantity,
   };
 
   render() {
+    console.log(JSON.parse(sessionStorage.getItem('cart')));
     return (
       <>
         <CurrencyContext.Provider value={this.state}>

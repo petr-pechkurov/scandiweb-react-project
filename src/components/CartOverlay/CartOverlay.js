@@ -104,10 +104,9 @@ export class CartItem extends Component {
   };
 
   changeQuantity(itemNumber, quantity) {
-    if (this.state.count === 0 && quantity === -1) return;
+    if (this.state.count === 1 && quantity === -1) return;
     const count = this.state.count + quantity;
     this.setState({ count: count });
-    console.log('count', count);
     this.context.changeQuantity(itemNumber, count);
   }
 
@@ -166,7 +165,7 @@ export class CartItem extends Component {
               action={() => this.changeQuantity(number, -1)}
             />
           </div>
-          <div className='img-container'>
+          <div className='img-preview'>
             <img src={gallery[0]} alt='small product'></img>
           </div>
         </div>
