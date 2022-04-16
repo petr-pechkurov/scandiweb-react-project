@@ -1,13 +1,12 @@
 .buttons-container {
   display: flex;
-  height: 80px;
   margin-left: 6rem;
-  margin-bottom: 3rem
 }
 
 .button {
   min-width: 5rem;
-  padding: 20px;
+  font-size: 1rem;
+  padding: 31px;
   border: none;
   background: none;
   text-transform: uppercase;

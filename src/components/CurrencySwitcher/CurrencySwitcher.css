@@ -15,16 +15,13 @@
   cursor: pointer;
   display: block;
   padding: 10px;
-}
-.dropdown:hover {
-  box-shadow: 0 0 4px rgb(204, 204, 204);
+  margin-top: 50px;
 }
 .dropdown:active {
   background-color: #f8f8f8;
 }
 .dropdown.active:hover,
 .dropdown.active {
-  box-shadow: 0 0 4px rgb(204, 204, 204);
   border-radius: 2px 2px 0 0;
   background-color: #f8f8f8;
 }
@@ -41,7 +38,7 @@
   overflow: hidden;
   display: block;
   overflow-y: auto;
-  z-index: 9;
+  z-index: 10;
 }
 .dropdown .dropdown-menu li {
   padding: 10px;

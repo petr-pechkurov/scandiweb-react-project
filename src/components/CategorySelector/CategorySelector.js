@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './CategorySelector.css';
 import { withRouter } from '../../withRouter';
-import { Link, Navigate } from 'react-router-dom';
 
 class CategorySelecor extends Component {
   categories;

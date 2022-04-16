@@ -109,7 +109,17 @@ class Description extends Component {
   };
 
   handleClick = () => {
-    this.context.addProduct(this.state.product);
+    const product = JSON.parse(JSON.stringify(this.state.product));
+    const { attributes } = product;
+    attributes.forEach((attribute) => {
+      const selectedItems = attribute.items.find((item) => item.selected);
+      if (!selectedItems) {
+        attribute.items[0].selected = true;
+      }
+    });
+    product.number = this.context.cart.length;
+    product.quantity = 1;
+    this.context.addProduct(product);
     this.setState({ added: true });
     setTimeout(() => {
       this.setState({ added: false });
@@ -158,9 +168,7 @@ class Attributes extends Component {
                   if (attribute.type === 'swatch') {
                     return (
                       <button
-                        className={`selector ${
-                          item.selected ? 'color' : ''
-                        }`}
+                        className={`selector ${item.selected ? 'color' : ''}`}
                         key={item.id}
                         onClick={() =>
                           this.props.onSelect({

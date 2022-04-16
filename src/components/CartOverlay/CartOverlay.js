@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import shoppingCart from '../../assets/Empty Cart.svg';
 import CurrencyContext from '../../contexts/CurrencyContext';
+import { withRouter } from '../../withRouter';
 
-export default class CartOverlay extends Component {
+class CartOverlay extends Component {
   static contextType = CurrencyContext;
   state = {
     isOverlayOpen: false,
@@ -31,13 +32,17 @@ export default class CartOverlay extends Component {
           <img src={shoppingCart} alt='shopcart' />
         </div>
         {this.state.isOverlayOpen && (
-          <CartContainer onBackgroundClick={this.closeCartOverlay} />
+          <CartContainer
+            onBackgroundClick={this.closeCartOverlay}
+            navigate={this.props.navigate}
+          />
         )}
       </div>
     );
   }
 }
 
+export default withRouter(CartOverlay);
 class CartContainer extends Component {
   static contextType = CurrencyContext;
   getTotalPrice() {
@@ -65,8 +70,8 @@ class CartContainer extends Component {
             <span style={{ fontWeight: '700' }}>My Bag, </span> {itemsTotal}{' '}
             items
           </div>
-          {cart.map((item) => (
-            <CartItem item={item} key={item.id} />
+          {cart.map((item, index) => (
+            <CartItem item={item} key={index} />
           ))}
           {itemsTotal > 0 && (
             <div className='total-container'>
@@ -76,35 +81,40 @@ class CartContainer extends Component {
               </div>
             </div>
           )}
-          <div className='button-block'>
-            <button>View Bag</button>
-            <button>View Bag</button>
-          </div>
+          {itemsTotal > 0 && (
+            <div className='button-block'>
+              <button
+                className='view-btn'
+                onClick={() => this.props.navigate('/cart')}>
+                View Bag
+              </button>
+              <button className='checkout-btn'>Checkout</button>
+            </div>
+          )}
         </div>
       </>
     );
   }
 }
 
-class CartItem extends Component {
+export class CartItem extends Component {
   static contextType = CurrencyContext;
   state = {
-    count: 1,
+    count: this.props.item.quantity ?? 1,
   };
 
-  componentDidMount() {
-    console.log(this.props.item.count);
-  }
-
-  changeQuantity(quantity) {
+  changeQuantity(itemNumber, quantity) {
     if (this.state.count === 0 && quantity === -1) return;
-    this.setState({ count: this.state.count + quantity });
+    const count = this.state.count + quantity;
+    this.setState({ count: count });
+    console.log('count', count);
+    this.context.changeQuantity(itemNumber, count);
   }
 
   render() {
     if (!this.props.item) return null;
     const { item } = this.props;
-    const { name, brand, prices, attributes, gallery } = item;
+    const { number, name, brand, prices, attributes, gallery } = item;
 
     const currentPrice = prices.find(
       (price) => price.currency.symbol === this.context.currency
@@ -147,13 +157,13 @@ class CartItem extends Component {
             <CartItemButton
               label='+'
               cursor={true}
-              action={() => this.changeQuantity(1)}
+              action={() => this.changeQuantity(number, 1)}
             />
             <div>{this.state.count}</div>
             <CartItemButton
               label='-'
               cursor={true}
-              action={() => this.changeQuantity(-1)}
+              action={() => this.changeQuantity(number, -1)}
             />
           </div>
           <div className='img-container'>
