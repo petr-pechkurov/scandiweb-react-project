@@ -30,9 +30,7 @@ class App extends React.Component {
       }
       return item;
     })
-    console.log('new cart', cart);
     this.setState({ cart: cart });
-    console.log('state', this.state);
   }
 
   state = {

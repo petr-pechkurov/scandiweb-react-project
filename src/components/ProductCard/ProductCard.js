@@ -2,22 +2,51 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import CurrencyContext from '../../contexts/CurrencyContext';
 import './ProductCard.css';
-
+import shoppingCart from '../../assets/Empty Cart.svg';
 export default class ProductCard extends React.Component {
   static contextType = CurrencyContext;
+  state = {
+    isButtonVisible: false,
+  };
+
+  showButton = () => {
+    this.setState({ isButtonVisible: true });
+  };
+  hideButton = () => {
+    this.setState({ isButtonVisible: false });
+  };
+
   render() {
     const { id, name, gallery, prices } = this.props.product;
     const [imgSrc] = gallery;
-    const price = prices.find(price => price.currency.symbol === this.context.currency);
+    const price = prices.find(
+      (price) => price.currency.symbol === this.context.currency
+    );
     const { symbol } = price.currency;
 
     return (
-      <div className='product-box' onClick={() => this.setState({ redirect: true })}>
-        {this.state?.redirect && <Navigate to={`/product/${id}`} replace={true} />}
+      <div
+        className='product-box'
+        onMouseEnter={this.showButton}
+        onMouseLeave={this.hideButton}>
+        {this.state?.redirect && (
+          <Navigate to={`/product/${id}`} replace={true} />
+        )}
         <div className='product-card'>
-          <div className='img-container'>
+          <div
+            className='img-container'
+            onClick={() => this.setState({ redirect: true })}>
             <img alt={name} src={imgSrc} />
           </div>
+          {this.state.isButtonVisible && (
+            <div
+              className='btn-container'
+              onClick={() => this.context.addProduct(this.props.product)}>
+              <div className='add-product-btn'>
+                <img src={shoppingCart} alt='cart' />
+              </div>
+            </div>
+          )}
           <div className='name-and-price'>
             <div className='product-name'>{name}</div>
             <div className='product-price'>
