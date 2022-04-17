@@ -31,6 +31,7 @@
   justify-content: center;
   align-items: center;
   margin: 100px 20px 0 0;
+  position: relative;
 }
 .product-box:hover {
   box-shadow: 0px 4px 35px rgba(45, 47, 49, 0.19);
@@ -51,7 +52,7 @@
 }
 .img-container img:hover {
   transition: 1s;
-  transform: scale(1.10);
+  transform: scale(1.1);
 }
 .product-name {
   margin-bottom: 5px;
@@ -62,4 +63,14 @@
 }
 .product-price {
   font-weight: 600;
+}
+
+.out-of-stock {
+  position: absolute;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+  cursor: default;
 }

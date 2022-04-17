@@ -17,7 +17,7 @@ export default class ProductCard extends React.Component {
   };
 
   render() {
-    const { id, name, gallery, prices } = this.props.product;
+    const { id, name, gallery, prices, inStock } = this.props.product;
     const [imgSrc] = gallery;
     const price = prices.find(
       (price) => price.currency.symbol === this.context.currency
@@ -28,17 +28,19 @@ export default class ProductCard extends React.Component {
       <div
         className='product-box'
         onMouseEnter={this.showButton}
-        onMouseLeave={this.hideButton}>
+        onMouseLeave={this.hideButton}
+        style={!inStock ? { opacity: 0.6 } : {}}>
         {this.state?.redirect && (
           <Navigate to={`/product/${id}`} replace={true} />
         )}
+        {!inStock && (<div className='out-of-stock'>out of stock</div>)}
         <div className='product-card'>
           <div
             className='img-container'
             onClick={() => this.setState({ redirect: true })}>
             <img alt={name} src={imgSrc} />
           </div>
-          {this.state.isButtonVisible && (
+          {this.state.isButtonVisible && inStock && (
             <div
               className='btn-container'
               onClick={() => this.context.addProduct(this.props.product)}>

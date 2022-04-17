@@ -117,7 +117,8 @@ class Description extends Component {
   };
 
   render() {
-    const { brand, name, description, prices, attributes } = this.state.product;
+    const { brand, name, description, prices, attributes, inStock } =
+      this.state.product;
     return (
       <div className='description'>
         <div className='brand'>{brand}</div>
@@ -133,8 +134,14 @@ class Description extends Component {
         />
         <button
           className={this.state?.added ? 'add-button-added' : 'add-button'}
-          onClick={this.handleClick}>
-          {this.state?.added ? 'Added to the cart!' : 'Add to Cart'}
+          onClick={this.handleClick}
+          style={inStock ? {} : { backgroundColor: 'gray', cursor: 'default' }}
+          disabled={!inStock}>
+          {this.state?.added
+            ? 'Added to the cart!'
+            : inStock
+            ? 'Add to Cart'
+            : 'out of stock'}
         </button>
         <div className='product-description'>
           <div dangerouslySetInnerHTML={{ __html: description }}></div>

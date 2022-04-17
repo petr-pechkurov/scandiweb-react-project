@@ -4,6 +4,7 @@ import CategoryPage from './pages/CategoryPage';
 import ProductDescriptionPage from './pages/ProductDescriptionPage';
 import CurrencyContext from './contexts/CurrencyContext';
 import CartPage from './pages/CartPage';
+import ErrorBoundary from './components/ErrorBoundary';
 
 class App extends React.Component {
   setCurrency = (currency) => {
@@ -56,16 +57,17 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(JSON.parse(sessionStorage.getItem('cart')));
     return (
       <>
         <CurrencyContext.Provider value={this.state}>
-          <Routes>
-            <Route path='/' element={<CategoryPage />} />
-            <Route path='/category/:name' element={<CategoryPage />} />
-            <Route path='/product/:id' element={<ProductDescriptionPage />} />
-            <Route path='/cart' element={<CartPage />} />
-          </Routes>
+          <ErrorBoundary>
+            <Routes>
+              <Route path='/' element={<CategoryPage />} />
+              <Route path='/category/:name' element={<CategoryPage />} />
+              <Route path='/product/:id' element={<ProductDescriptionPage />} />
+              <Route path='/cart' element={<CartPage />} />
+            </Routes>
+          </ErrorBoundary>
         </CurrencyContext.Provider>
       </>
     );

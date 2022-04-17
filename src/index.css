@@ -238,8 +238,6 @@ body {
   justify-content: space-between;
 }
 
-.cart-item-label {
-}
 .cart-item-price {
   margin-top: 5px;
   font-weight: 700;
@@ -430,4 +428,24 @@ hr {
   width: 100%;
   min-height: 100px;
   object-fit: contain;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20% 0;
+}
+.error-container a {
+  margin-top: 10px;
+  width: 12rem;
+  padding: 10px;
+  text-transform: uppercase;
+  background: var(--c-primary);
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  line-height: 25px;
+  text-decoration: none;
 }
