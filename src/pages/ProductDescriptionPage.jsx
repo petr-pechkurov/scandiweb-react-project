@@ -3,7 +3,6 @@ import { getProductById } from '../repository';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import CurrencyContext from '../contexts/CurrencyContext';
-import ErrorBoundary from '../components/ErrorBoundary';
 
 function withRouter(Component) {
   function ComponentWithRouter(props) {
