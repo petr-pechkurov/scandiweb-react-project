@@ -3,6 +3,7 @@ import { getProductById } from '../repository';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import CurrencyContext from '../contexts/CurrencyContext';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 function withRouter(Component) {
   function ComponentWithRouter(props) {
@@ -28,7 +29,11 @@ class ProductDescriptionPage extends Component {
     this.setState({ id: this.props.params.id });
 
     const { product } = await getProductById(this.state.id);
-    this.setState({ product: product, image: product.gallery[0] });
+    if (product) {
+      this.setState({ product: product, image: product.gallery[0] });
+    } else {
+      this.setState({ hasError: true });
+    }
   }
 
   setImage = (event) => {
@@ -42,6 +47,14 @@ class ProductDescriptionPage extends Component {
   };
 
   render() {
+    if (this.state.hasError) {
+      return (
+        <>
+          <Header />
+          <h1 className='no-items'>Product not found...</h1>
+        </>
+      );
+    }
     if (this.state.product) {
       const { gallery } = this.state.product;
       return (
