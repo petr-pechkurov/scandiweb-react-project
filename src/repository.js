@@ -7,6 +7,7 @@ async function getProductById(id) {
     .addArgument('id', 'String!', id)
     .addField('id')
     .addField('name')
+    .addField('inStock')
     .addField('gallery')
     .addField('description')
     .addField('brand')
@@ -32,6 +33,7 @@ async function getCategoriesWithProducts() {
       new Field('products', true)
         .addField('id')
         .addField('name')
+        .addField('inStock')
         .addField('gallery')
         .addField(
           new Field('attributes')

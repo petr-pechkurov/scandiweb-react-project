@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import CurrencyContext from '../contexts/CurrencyContext';
 import leftArrow from '../assets/left-arrow.svg';
 import rightArrow from '../assets/right-arrow.svg';
+import { FaTrash } from 'react-icons/fa';
 
 export default class CartPage extends Component {
   static contextType = CurrencyContext;
@@ -62,6 +63,13 @@ export default class CartPage extends Component {
                           </div>
                         );
                       })}
+                    </div>
+                    <div>
+                      <FaTrash
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => this.context.removeProduct(item.number)}
+                        size={30}
+                      />
                     </div>
                   </div>
                   <div style={{ display: 'flex' }}>

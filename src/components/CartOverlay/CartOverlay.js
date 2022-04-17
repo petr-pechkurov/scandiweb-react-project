@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { FaTrash } from 'react-icons/fa';
 import shoppingCart from '../../assets/Empty Cart.svg';
 import CurrencyContext from '../../contexts/CurrencyContext';
 import { withRouter } from '../../withRouter';
-
 class CartOverlay extends Component {
   static contextType = CurrencyContext;
   state = {
@@ -106,7 +106,7 @@ export class CartItem extends Component {
   changeQuantity(itemNumber, quantity) {
     if (this.state.count === 1 && quantity === -1) return;
     const count = this.state.count + quantity;
-    this.setState({ count: count });
+    this.setState({ count });
     this.context.changeQuantity(itemNumber, count);
   }
 
@@ -149,6 +149,12 @@ export class CartItem extends Component {
                 })}
               </>
             )}
+          </div>
+          <div>
+            <FaTrash
+              style={{ cursor: 'pointer', marginTop: '5px' }}
+              onClick={() => this.context.removeProduct(number)}
+            />
           </div>
         </div>
         <div className='gallery'>

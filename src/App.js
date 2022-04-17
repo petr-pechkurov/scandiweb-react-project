@@ -31,10 +31,10 @@ class App extends React.Component {
       (productInCart) => productInCart.number !== index
     );
     this.setState({ cart: cart });
+    sessionStorage.setItem('cart', JSON.stringify(cart));
   };
 
   changeQuantity = (index, quantity) => {
-    console.log('test', index, quantity);
     const cart = this.state.cart.map((item) => {
       if (item.number === index) {
         return { ...item, quantity: quantity };
