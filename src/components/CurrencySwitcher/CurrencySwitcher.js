@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './CurrencySwitcher.css';
 import { getCurrencies } from '../../repository';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import CurrencyContext from '../../contexts/CurrencyContext';
+import chevron from '../../assets/chevron-down.svg';
 
 export default class CurrencySwitcher extends Component {
   state = {
@@ -63,9 +63,9 @@ class CurrencyDropdown extends Component {
             <span>
               {this.props.selected}{' '}
               {this.state.open ? (
-                <FaChevronUp size={10} />
+                <img src={chevron} alt='chevron' style={{ transform: 'rotate(180deg)' }} />
               ) : (
-                <FaChevronDown size={10} />
+                <img src={chevron} alt='chevron' />
               )}
             </span>
           </div>

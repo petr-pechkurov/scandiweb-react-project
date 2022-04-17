@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { FaTrash } from 'react-icons/fa';
 import shoppingCart from '../../assets/Empty Cart.svg';
 import CurrencyContext from '../../contexts/CurrencyContext';
 import { withRouter } from '../../withRouter';
+import trashCan from '../../assets/trashcan.png';
 class CartOverlay extends Component {
   static contextType = CurrencyContext;
   state = {
@@ -49,9 +49,9 @@ class CartContainer extends Component {
     let sum = 0;
     this.context.cart.forEach(
       (item) =>
-        (sum += item.prices.find(
-          (price) => price.currency.symbol === this.context.currency
-        ).amount)
+      (sum += item.prices.find(
+        (price) => price.currency.symbol === this.context.currency
+      ).amount)
     );
     return sum.toFixed(2);
   }
@@ -150,11 +150,16 @@ export class CartItem extends Component {
               </>
             )}
           </div>
-          <div>
-            <FaTrash
-              style={{ cursor: 'pointer', marginTop: '5px' }}
-              onClick={() => this.context.removeProduct(number)}
+          <div
+            style={{ cursor: 'pointer' }}
+            onClick={() => this.context.removeProduct(item.number)}>
+            <img
+              src={trashCan}
+              alt='can'
+              style={{ height: '20px', marginTop: '5px' }}
             />
+          </div>
+          <div>
           </div>
         </div>
         <div className='gallery'>
