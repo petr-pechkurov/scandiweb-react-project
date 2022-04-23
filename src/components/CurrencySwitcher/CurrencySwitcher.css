@@ -1,3 +1,6 @@
+.chevron-top {
+transform: rotate(180deg);
+}
 .dropdown {
   min-width: 3rem;
   display: inline-block;

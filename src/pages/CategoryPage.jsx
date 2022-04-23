@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import Category from '../components/Category/Category';
+import Category from '../components/Category';
 import Header from '../components/Header';
 import { ClassicSpinner } from 'react-spinners-kit';
 import { getCategoriesWithProducts } from '../repository';
+import { getCategoryByName } from '../repository';
 import { withRouter } from '../withRouter';
 
 class CategoryPage extends Component {
   categories;
   async componentDidMount() {
+    const category = await getCategoryByName('all');
+    console.log(category);
     ({ categories: this.categories } = await getCategoriesWithProducts());
     const selectedCategory = this.props.params.name ?? 'all';
     this.setSelectedCategory(selectedCategory);
@@ -36,11 +39,7 @@ class CategoryPage extends Component {
         <>
           <Header />
           <div className='products-container'>
-            <Category
-              category={categories.find(
-                (category) => category.selected === true
-              )}
-            />
+            <Category category={categories.find((category) => category.selected === true)} />
           </div>
         </>
       );

@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductCard from '../ProductCard/ProductCard';
+import ProductCard from '../ProductCard';
 
 export default class Category extends React.Component {
   render() {
