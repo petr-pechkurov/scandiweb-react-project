@@ -66,24 +66,29 @@ class CartContainer extends Component {
           {cart.map((item, index) => (
             <CartItem item={item} key={index} />
           ))}
-          <div className='sticky'>
-            {itemsTotal > 0 && (
-              <div className='total-container'>
-                <div>Total</div>
-                <div>
-                  {currency} {this.getTotalPrice()}
-                </div>
+
+          {itemsTotal > 0 && (
+            <div>
+              <div className='sticky'>
+                {itemsTotal > 0 && (
+                  <div className='total-container'>
+                    <div>Total</div>
+                    <div>
+                      {currency} {this.getTotalPrice()}
+                    </div>
+                  </div>
+                )}
+                {itemsTotal > 0 && (
+                  <div className='button-block'>
+                    <button className='view-btn' onClick={() => this.props.navigate('/cart')}>
+                      View Bag
+                    </button>
+                    <button className='checkout-btn'>Checkout</button>
+                  </div>
+                )}
               </div>
-            )}
-            {itemsTotal > 0 && (
-              <div className='button-block'>
-                <button className='view-btn' onClick={() => this.props.navigate('/cart')}>
-                  View Bag
-                </button>
-                <button className='checkout-btn'>Checkout</button>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </>
     );
@@ -146,7 +151,7 @@ export class CartItem extends Component {
             )}
           </div>
           <div className='pointer' onClick={() => this.context.removeProduct(item.number)}>
-            <img src={trashCan} alt='can'/>
+            <img src={trashCan} alt='can' />
           </div>
         </div>
         <div className='gallery'>

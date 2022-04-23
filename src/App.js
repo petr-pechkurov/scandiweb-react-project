@@ -13,8 +13,6 @@ class App extends React.Component {
 
   addProduct = (newProduct) => {
     const product = JSON.parse(JSON.stringify(newProduct));
-    console.log(product);
-    // const productsToCompare = this.state.cart.filter((product) => product.id === newProduct.id);
     const { attributes } = product;
     attributes.forEach((attribute) => {
       const selectedItems = attribute.items.find((item) => item.selected);

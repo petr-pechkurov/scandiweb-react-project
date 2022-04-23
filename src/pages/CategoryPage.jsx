@@ -2,44 +2,30 @@ import React, { Component } from 'react';
 import Category from '../components/Category';
 import Header from '../components/Header';
 import { ClassicSpinner } from 'react-spinners-kit';
-import { getCategoriesWithProducts } from '../repository';
 import { getCategoryByName } from '../repository';
 import { withRouter } from '../withRouter';
 
 class CategoryPage extends Component {
-  categories;
   async componentDidMount() {
-    const category = await getCategoryByName('all');
-    console.log(category);
-    ({ categories: this.categories } = await getCategoriesWithProducts());
     const selectedCategory = this.props.params.name ?? 'all';
-    this.setSelectedCategory(selectedCategory);
+    const category = await getCategoryByName(selectedCategory);
+    this.setState(category);
   }
 
-  setSelectedCategory(categoryName) {
-    this.categories = this.categories.map((category) => {
-      return {
-        ...category,
-        selected: category.name === categoryName ? true : false,
-      };
-    });
-    this.setState({ categories: this.categories });
-  }
-
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     if (this.props.params.name !== prevProps.params.name) {
-      this.setSelectedCategory(this.props.params.name);
+      const category = await getCategoryByName(this.props.params.name);
+      this.setState(category);
     }
   }
 
   render() {
-    if (this.state?.categories) {
-      const { categories } = this.state;
+    if (this.state) {
       return (
         <>
           <Header />
           <div className='products-container'>
-            <Category category={categories.find((category) => category.selected === true)} />
+            <Category category={this.state.category} />
           </div>
         </>
       );
