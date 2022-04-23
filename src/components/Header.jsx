@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import CategorySelecor from '../components/CategorySelector/CategorySelector';
-import CurrencySwitcher from '../components/CurrencySwitcher/CurrencySwitcher';
-import CartOverlay from '../components/CartOverlay/CartOverlay';
+import CategorySelecor from '../components/CategorySelector';
+import CurrencySwitcher from '../components/CurrencySwitcher';
+import CartOverlay from './CartOverlay';
 import { getCategories } from '../repository';
 import { withRouter } from '../withRouter';
 

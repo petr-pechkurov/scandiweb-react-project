@@ -1,0 +1,177 @@
+.attribute-block {
+  margin: 5px 0;
+}
+.attribute-block button {
+  margin-right: 0.5rem;
+}
+.attribute-name {
+  margin: 10px 0;
+}
+
+.button-block {
+  position: relative;
+  bottom: 1%;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-item-button {
+  padding: 2px;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.cart-item-swatch {
+  display: inline;
+  padding: 0px 10px;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid black;
+  background-color: white;
+}
+.pointer {
+  cursor: pointer;
+}
+.selected-attr {
+  background-color: black;
+  color: white;
+}
+.selected-swatch {
+  padding: 3px 16px;
+  border: 2px solid black;
+}
+
+.cart-overlay {
+  margin-left: 10px;
+  margin-top: 0.6rem;
+  padding: 0 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.cart-overlay .background {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  left: 0%;
+  top: 80px;
+}
+
+.cart-overlay .cart-icon {
+  padding: 2px;
+  cursor: pointer;
+}
+
+.cart-overlay .product-counter {
+  cursor: pointer;
+  position: absolute;
+  bottom: 55%;
+  left: 50%;
+  background-color: #1d1f22;
+  color: white;
+  width: 45%;
+  border-radius: 60px;
+  font-weight: 700;
+  text-align: center;
+  font-family: Roboto;
+}
+
+.cart-overlay .overlay-container {
+  position: absolute;
+  top: 52px;
+  right: 10%;
+  background-color: white;
+  padding: 0.5rem 1rem 1px 1rem;
+  height: 33.75rem;
+  width: 20rem;
+  overflow-y: auto;
+}
+
+.cart-item-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 0;
+}
+
+.cart-item-container .info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cart-item-price {
+  margin-top: 5px;
+  font-weight: 700;
+}
+
+.add-remove-buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+.add-remove-buttons-container button {
+  cursor: pointer;
+}
+
+.cart-item-container .gallery {
+  display: flex;
+  max-width: 100px;
+}
+
+.cart-item-container .img-container {
+  width: 105px;
+  max-height: 137px;
+}
+.cart-item-container .img-container img {
+  margin: auto;
+}
+
+.total-container {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.button-block button {
+  width: 49%;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 1rem;
+  padding: 13px;
+  cursor: pointer;
+}
+
+.button-block .view-btn {
+  background-color: white;
+  border: 1px solid #1d1f22;
+}
+
+.button-block .checkout-btn {
+  border: none;
+  background-color: var(--c-primary);
+  color: white;
+}
+
+.sticky {
+  position: fixed;
+  top: 620px;
+  right: 148px;
+  background-color: white;
+  width: 320px;
+  padding: 0.5rem 10px 1rem;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.pointer img {
+  height: 20px;
+  margin-top: 5px;
+}

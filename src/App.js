@@ -20,6 +20,13 @@ class App extends React.Component {
         attribute.items[0].selected = true;
       }
     });
+
+    const existingProduct = this.findProductInCart(product);
+    if (existingProduct) {
+      this.changeQuantity(existingProduct.number, existingProduct.quantity + 1);
+      return;
+    }
+
     product.number = this.state.cart.length;
     product.quantity = 1;
     const cart = [...this.state.cart, product];
@@ -27,10 +34,27 @@ class App extends React.Component {
     sessionStorage.setItem('cart', JSON.stringify(cart));
   };
 
+  findProductInCart = (newProduct) => {
+    const productsToCompare = this.state.cart.filter((product) => product.id === newProduct.id);
+    const existingProduct = productsToCompare.find((product) => {
+      const attributesToCheck = this.getSelectedAttributes(product);
+      const newProdAttributes = this.getSelectedAttributes(newProduct);
+      if (attributesToCheck.sort().toString() === newProdAttributes.sort().toString()) {
+        return product;
+      }
+      return null;
+    });
+    return existingProduct;
+  };
+
+  getSelectedAttributes(product) {
+    return product.attributes.map((attribute) => {
+      return attribute.items.filter((item) => item.selected).map((item) => item.value);
+    });
+  }
+
   removeProduct = (index) => {
-    const cart = this.state.cart.filter(
-      (productInCart) => productInCart.number !== index
-    );
+    const cart = this.state.cart.filter((productInCart) => productInCart.number !== index);
     this.setState({ cart: cart });
     sessionStorage.setItem('cart', JSON.stringify(cart));
   };

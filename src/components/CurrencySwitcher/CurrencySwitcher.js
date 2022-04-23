@@ -31,9 +31,7 @@ export default class CurrencySwitcher extends Component {
   }
 
   setSelectedCurrency(selected) {
-    const selectedCurrency = this.currencies.find(
-      (currency) => currency.symbol === selected
-    );
+    const selectedCurrency = this.currencies.find((currency) => currency.symbol === selected);
     this.setState({ selectedCurrency });
     this.context.setCurrency(selectedCurrency.symbol);
     sessionStorage.setItem('currency', selectedCurrency.symbol);
@@ -57,13 +55,11 @@ class CurrencyDropdown extends Component {
     return (
       <div className='container'>
         <div className='dropdown'>
-          <div
-            onClick={() => this.setState({ open: !this.state.open })}
-            className='select'>
+          <div onClick={() => this.setState({ open: !this.state.open })} className='select'>
             <span>
               {this.props.selected}{' '}
               {this.state.open ? (
-                <img src={chevron} alt='chevron' style={{ transform: 'rotate(180deg)' }} />
+                <img src={chevron} alt='chevron' className='chevron-top' />
               ) : (
                 <img src={chevron} alt='chevron' />
               )}
@@ -72,9 +68,7 @@ class CurrencyDropdown extends Component {
           <input type='hidden' name='currency' />
           {this.state.open && (
             <>
-              <div
-                className='background'
-                onClick={() => this.setState({ open: false })}></div>
+              <div className='background' onClick={() => this.setState({ open: false })}></div>
               <ul className='dropdown-menu'>
                 {this.props.options.map((option) => (
                   <li

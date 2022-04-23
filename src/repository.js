@@ -16,7 +16,8 @@ async function getProductById(id) {
         .addField('id')
         .addField('name')
         .addField('type')
-        .addField(new Field('items').addField('id').addField('value').addField('displayValue')))
+        .addField(new Field('items').addField('id').addField('value').addField('displayValue'))
+    )
     .addField(
       new Field('prices')
         .addField('amount')
@@ -26,11 +27,12 @@ async function getProductById(id) {
   return await client.post(query);
 }
 
-async function getCategoriesWithProducts() {
-  var query = new Query('categories')
+async function getCategoryByName(name) {
+  var query = new Query('category')
+    .addArgument('input', 'CategoryInput!', { title: name })
     .addField('name')
     .addField(
-      new Field('products', true)
+      new Field('products')
         .addField('id')
         .addField('name')
         .addField('inStock')
@@ -40,10 +42,13 @@ async function getCategoriesWithProducts() {
             .addField('id')
             .addField('name')
             .addField('type')
-            .addField(new Field('items').addField('id').addField('value').addField('displayValue')))
-        .addField(new Field('prices')
-          .addField(new Field('currency').addField('label').addField('symbol'))
-          .addField('amount'))
+            .addField(new Field('items').addField('id').addField('value').addField('displayValue'))
+        )
+        .addField(
+          new Field('prices')
+            .addField(new Field('currency').addField('label').addField('symbol'))
+            .addField('amount')
+        )
     );
   return await client.post(query);
 }
@@ -58,5 +63,4 @@ async function getCurrencies() {
   return await client.post(query);
 }
 
-
-export { getProductById, getCategoriesWithProducts, getCategories, getCurrencies };
+export { getProductById, getCategoryByName, getCategories, getCurrencies };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Parser } from 'html-to-react';
 import { getProductById } from '../repository';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
@@ -36,9 +37,7 @@ class ProductDescriptionPage extends Component {
   }
 
   setImage = (event) => {
-    const img = this.state.product.gallery.find(
-      (img) => img === event.target.src
-    );
+    const img = this.state.product.gallery.find((img) => img === event.target.src);
 
     this.setState({
       image: img,
@@ -111,9 +110,7 @@ class Description extends Component {
 
   setSelectedAttribute = ({ attributeId, selectedItemId }) => {
     const product = JSON.parse(JSON.stringify(this.state.product));
-    const selectedAttribute = product.attributes.find(
-      (attribute) => attribute.id === attributeId
-    );
+    const selectedAttribute = product.attributes.find((attribute) => attribute.id === attributeId);
     selectedAttribute.items.forEach(
       (item) => (item.selected = item.id === selectedItemId ? true : false)
     );
@@ -129,34 +126,23 @@ class Description extends Component {
   };
 
   render() {
-    const { brand, name, description, prices, attributes, inStock } =
-      this.state.product;
+    const { brand, name, description, prices, attributes, inStock } = this.state.product;
+
     return (
       <div className='description'>
         <div className='brand'>{brand}</div>
         <div className='name'>{name}</div>
-        <Attributes
-          attributes={attributes}
-          onSelect={this.setSelectedAttribute}
-        />
-        <Price
-          price={prices.find(
-            (price) => price.currency.symbol === this.context.currency
-          )}
-        />
+        <Attributes attributes={attributes} onSelect={this.setSelectedAttribute} />
+        <Price price={prices.find((price) => price.currency.symbol === this.context.currency)} />
         <button
           className={this.state?.added ? 'add-button-added' : 'add-button'}
           onClick={this.handleClick}
           style={inStock ? {} : { backgroundColor: 'gray', cursor: 'default' }}
           disabled={!inStock}>
-          {this.state?.added
-            ? 'Added to the cart!'
-            : inStock
-            ? 'Add to Cart'
-            : 'out of stock'}
+          {this.state?.added ? 'Added to the cart!' : inStock ? 'Add to Cart' : 'out of stock'}
         </button>
         <div className='product-description'>
-          <div dangerouslySetInnerHTML={{ __html: description }}></div>
+          {Parser().parse(description)}
         </div>
       </div>
     );
