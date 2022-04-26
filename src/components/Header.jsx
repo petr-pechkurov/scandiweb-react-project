@@ -4,6 +4,7 @@ import CurrencySwitcher from '../components/CurrencySwitcher';
 import CartOverlay from './CartOverlay';
 import { getCategories } from '../repository';
 import { withRouter } from '../withRouter';
+import logo from '../assets/a-logo.svg'
 
 class Header extends Component {
   categories;
@@ -34,6 +35,9 @@ class Header extends Component {
                 return { name: category.name, selected: category.selected };
               })}
             />
+          </div>
+          <div>
+            <img src={logo} alt='logo' />
           </div>
           <div className='box'>
             <CurrencySwitcher />

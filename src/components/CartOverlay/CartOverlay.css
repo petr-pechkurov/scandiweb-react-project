@@ -40,8 +40,9 @@
   color: white;
 }
 .selected-swatch {
-  padding: 3px 16px;
-  border: 2px solid black;
+  padding: 3px 12px;
+  border: 1px solid white;
+  outline: 1px solid #5ECE7B;
 }
 
 .cart-overlay {
