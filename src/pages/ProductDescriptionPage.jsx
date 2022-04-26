@@ -79,12 +79,9 @@ class Gallery extends Component {
     return (
       <div className='pdp-gallery-img-container'>
         {gallery.map((img, index) => (
-          <img
-            onClick={(event) => this.props.setImage(event)}
-            src={img}
-            key={index}
-            alt='product'
-          />
+          <div key={index} className='pdp-gallery-img'>
+            <img onClick={(event) => this.props.setImage(event)} src={img} alt='product' />
+          </div>
         ))}
       </div>
     );
@@ -135,15 +132,12 @@ class Description extends Component {
         <Attributes attributes={attributes} onSelect={this.setSelectedAttribute} />
         <Price price={prices.find((price) => price.currency.symbol === this.context.currency)} />
         <button
-          className={this.state?.added ? 'add-button-added' : 'add-button'}
+          className={`${this.state?.added ? 'add-button-added' : 'add-button'} ${inStock ? '' : 'btn-disabled'}`}
           onClick={this.handleClick}
-          style={inStock ? {} : { backgroundColor: 'gray', cursor: 'default' }}
           disabled={!inStock}>
           {this.state?.added ? 'Added to the cart!' : inStock ? 'Add to Cart' : 'out of stock'}
         </button>
-        <div className='product-description'>
-          {Parser().parse(description)}
-        </div>
+        <div className='product-description'>{Parser().parse(description)}</div>
       </div>
     );
   }

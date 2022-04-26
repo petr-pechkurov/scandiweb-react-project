@@ -26,10 +26,9 @@ export default class ProductCard extends React.Component {
 
     return (
       <div
-        className='product-box'
+        className={`product-box ${inStock ? '' : 'not-in-stock'}`}
         onMouseEnter={this.showButton}
-        onMouseLeave={this.hideButton}
-        style={!inStock ? { opacity: 0.6 } : {}}>
+        onMouseLeave={this.hideButton}>
         {this.state?.redirect && (
           <Navigate to={`/product/${id}`} replace={true} />
         )}

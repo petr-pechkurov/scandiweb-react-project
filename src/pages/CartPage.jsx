@@ -41,14 +41,16 @@ export default class CartPage extends Component {
                       {item.attributes.map((attribute) => {
                         return (
                           <div key={attribute.id} className='mr-2rem'>
-                            <div>{attribute.name}</div>
+                            <div>{attribute.name}:</div>
                             <div className='attribute-value'>
                               {attribute.type === 'swatch' ? (
                                 <>
                                   {attribute.items.map((item) => (
                                     <button
                                       key={item.id}
-                                      className={item.selected ? 'cart-swatch-selected' : ''}
+                                      className={`${
+                                        item.selected ? 'cart-swatch-selected' : ''
+                                      } swatch`}
                                       style={{
                                         backgroundColor: item.value,
                                       }}></button>
@@ -86,6 +88,8 @@ export default class CartPage extends Component {
               </div>
             );
           })}
+          <hr />
+          <Totals cart={this.context.cart} currency={this.context.currency} />
         </div>
       </>
     );
@@ -170,6 +174,43 @@ class Gallery extends Component {
           );
         })}
       </section>
+    );
+  }
+}
+
+class Totals extends Component {
+  render() {
+    const { cart, currency } = this.props;
+
+    let qty = 0;
+    let total = 0;
+
+    cart.forEach((item) => {
+      qty += item.quantity;
+      total +=
+        item.quantity * item.prices.find((price) => price.currency.symbol === currency).amount
+    });
+    return (
+      <div className='cart-page-totals'>
+        <div className='tax-qty-block'>
+          <div>
+            Tax: <span>{currency}15</span>
+          </div>
+          <div>
+            Qty: <span>{qty}</span>
+          </div>
+        </div>
+        <div>
+          <div className='total-block'>
+            Total:&nbsp;
+            <span>
+              {currency}
+              {total.toFixed(2)}
+            </span>
+          </div>
+        </div>
+        <button>order</button>
+      </div>
     );
   }
 }

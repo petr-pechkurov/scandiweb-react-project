@@ -74,3 +74,6 @@
   z-index: 1;
   cursor: default;
 }
+.not-in-stock {
+  opacity: 0.5;
+}
